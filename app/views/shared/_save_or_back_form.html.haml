@@ -1,0 +1,10 @@
+-# f            the form
+-# submit_label
+-# back_label
+-# back_url
+- submit_class ||= "btn btn-success btn-block"
+- back_class ||= "btn btn-primary btn-block"
+= yield
+= f.submit submit_label, class: submit_class
+- if defined? back_url
+  = link_to back_label, back_url, class: back_class

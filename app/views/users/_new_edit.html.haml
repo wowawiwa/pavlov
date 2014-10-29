@@ -1,0 +1,7 @@
+- provide_title I18n.t("users.#{action}.title")
+.row
+  .col-md-4.col-md-offset-4
+    = form_for(@user) do |f|
+      = render 'shared/user_form', f: f
+      = f.submit I18n.t("users.#{action}.submit"), class: "btn form-first-btn form-save-btn"
+      = link_to( I18n.t("users.#{action}.back"), user_path(@user), class: "btn form-second-btn form-discard-btn") if @user.id

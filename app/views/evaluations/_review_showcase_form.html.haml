@@ -1,0 +1,7 @@
+= form_for @evaluation, html: { id: "eval-success"} do |f|
+  = render "review_showcase_form_button", f: f, result: true
+  = f.submit I18n.t("evaluations.ok"), class: "btn btn-success btn-block btn-eval", data: { keybinding: access_key(:eval_success)}
+%br
+= form_for @evaluation, html: { id: "eval-fail"} do |f|
+  = render "review_showcase_form_button", f: f, result: false
+  = f.submit I18n.t("evaluations.nok"), class: "btn btn-danger btn-block btn-eval", data: { keybinding: access_key(:eval_fail)} 

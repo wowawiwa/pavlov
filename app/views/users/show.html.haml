@@ -1,0 +1,12 @@
+- provide_title I18n.t('users.show.title')
+.row
+  .col-md-4.col-md-offset-4
+    = form_for @user do |f|
+
+      = f.label :name # TODO name from ActiveRecord
+      %p= @user.name
+
+      = f.label :email
+      %p= @user.email
+
+      = link_to I18n.t('users.show.edit_user_link'), edit_user_path(@user), class: "btn form-first-btn edit-btn"

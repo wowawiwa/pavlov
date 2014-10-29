@@ -1,0 +1,7 @@
+- provide_title I18n.t("lists.#{action}.title")
+.row
+  .col-md-4.col-md-offset-4
+    = form_for(@list) do |f|
+      = render "list_form", f: f
+      = f.submit I18n.t("lists.#{action}.submit"), class: "btn form-first-btn form-save-btn"
+      = link_to( I18n.t("lists.#{action}.back"), @back_url, class: "btn form-second-btn form-discard-btn")

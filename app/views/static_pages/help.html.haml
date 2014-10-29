@@ -1,0 +1,38 @@
+- provide_title I18n.t('static_pages.help.title')
+.row
+  .col-sm-4
+    %ul.list-unstyled.icon-list
+      %li.glyphicon-pencil
+        Create a 
+        %strong flash-card 
+        for anything that you want to 
+        %strong train on.
+        %ul.welcome-ul
+          %li <strong>Languages</strong>
+          %li New <strong>habits</strong> to get into
+          %li <strong>History</strong>
+          %li ...
+  .col-sm-4
+    %ul.list-unstyled.icon-list
+      %li.glyphicon-cog
+        -# glyphicon-retweet
+        Pavlov let you
+        <strong>review your content</strong>
+        and
+        <strong>assess your assimilation</strong>:
+        = image_tag("com/reviewing_and_assessment.jpg", style: "width: 100%; margin-top: 20px; margin-bottom: 10px;")
+        -#%li.glyphicon-adjust
+        -#.glyphicon-sort
+        -#.glyphicon-edit
+        -#It takes this opportunity to let you
+  .col-sm-4
+    %ul.list-unstyled.icon-list
+      %li.glyphicon-calendar
+        Using your assessments, Pavlov knows 
+        %strong when a card is worth being reviewed again.
+      %li.glyphicon-envelope
+        You can 
+        %strong configure a daily or weekly mail 
+        for each list of cards independently 
+  = image_tag("com/mustaches-light-blue.jpg", style: "width: 100%; margin-top: 10px;")
+  = image_tag("com/screenshot.jpg", style: "width: 100%; margin-top: 10px;")

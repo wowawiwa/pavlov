@@ -1,0 +1,32 @@
+- provide_title I18n.t("evaluations.new.title"), @scope_name
+
+- if !current_user.guide[:assert] or !current_user.guide[:homeanytime]
+  .row
+    .col-md-4.col-md-offset-4
+      = render "shared/guide", label: :assert, previous: :reveal
+      = render "shared/guide", label: :home, previous: :assert
+
+-# Display Correct and Home buttons
+.row#eval-controls-nav
+  .col-md-3.col-md-offset-3
+    = @correction_url.try{ link_to( I18n.t("evaluations.new.correct"), @correction_url, class: "btn btn-warning", data: { keybinding: access_key(:correction)})}
+  .col-md-3.text-right
+    = link_to( I18n.t("evaluations.new.home"), root_path, class: "btn btn-primary btn-eval-home" )
+      
+
+-# Display evaluation set ^ finish screen
+- if @card
+  -# Evaluation review buttons and showcase
+  = render "review_showcase", action: :new
+  -# Edition tools
+  .row.eval-controls
+    .col-md-3.col-md-offset-3
+      = link_to( I18n.t("evaluations.new.delete_card"), card_path(@card), method: :delete, data: { confirm: I18n.t("cards.index.table.body.card_delete_confirmation")}, class: "btn btn-default")
+    .col-md-3.text-right
+      = link_to( I18n.t("evaluations.new.edit_card"), @edit_url, class: "btn btn-default")
+      = link_to( cards_path(list_name: @scope_name), class: "btn btn-default", target: '_blank', alt: I18n.t("monitor.list_overview.table.body.list_view_link")){ haml_tag :span, :class => "glyphicon glyphicon-th-list"}
+- else
+  .row
+    .col-md-4.col-md-offset-4.text-center
+      .eval-over-sign= I18n.t('evaluations.new.over.sign')
+      .eval-over-text{ title: I18n.t('evaluations.new.over.secret')}!= I18n.t('evaluations.new.over.text')

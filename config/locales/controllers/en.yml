@@ -1,0 +1,59 @@
+en:
+  mailers:
+    review_delivery:
+      subject:    "Review Delivery: %{list_name}"
+    email_confirmation:
+      subject:    "Email Confirmation"
+    password_reset:
+      subject:    "Password Reset"
+  controllers:
+    users:
+      create:
+        success:  "Welcome!"
+      update:
+        success:  "Changes have been saved"
+      require_email_confirmation:
+        success:  "Confirmation e-mail has been sent. Please check your inbox!"
+        warning:  "Confirmation e-mail could not be sent (Max. 1 confirmation mail every 3 hours)" # TODO improve phrasing
+      confirm_email:
+        success:  "Your email address has been successfully confirmed."
+        warning:  "Your email address could not be confirmed."
+    sessions:
+      create_password_reset_request:
+        success:  "Confirmation e-mail has been sent. Please check your inbox!"
+        warning:  "Confirmation e-mail could not sent (Max. 1 confirmation mail every hour)"
+    lists:
+      create:
+        success:  "Your list has been saved"
+      update:
+        success:  "Changes have been saved"
+      destroy:
+        success:  "List has been deleted"
+        warning:  "List could not be deleted"
+    cards:
+      create:
+        success:  "Your card has been saved"
+      index:
+        warning:  "List does not exist"
+      update:
+        success:  "Changes have been saved"
+      destroy:
+        success:  "Card has been deleted"
+        warning:  "Card could not be deleted"
+      new_batch:
+        warning:  "List could not be found"
+      import:
+        success:  "%{count} have been successfully imported" 
+        info:     "%{count_success} have been successfully added. %{count_fail} could not be added."
+        warning:  "Did not receive file"
+    evaluations:
+      new:
+        warning:  "No %{scope_name} has been found"
+      create:
+        warning:  "The result could not be saved"
+      edit:
+        warning:  "The review could not be found"
+      update:
+        success:  "Changes have been saved"
+        warning:  "Changes could not be saved"
+

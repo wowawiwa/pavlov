@@ -1,0 +1,90 @@
+- list = f.object
+- user = list.user
+
+:javascript
+  $(document).ready( function(){
+    var mailCheckboxHandler = function(){
+      if($('#review-mode').is(':checked')){ // mail
+        $("#list-settings-mail :input").attr("disabled", false);//#{user.email_confirmed? ? "false" : "true"});
+        $("#list-settings-mail").css('display','block');
+        $("#list-settings-no-mail :input").attr("disabled", true);
+        $("#list-settings-no-mail").css('display','none');
+      } else { // no mail
+        console.log("hello no mail");
+        $("#list-settings-mail :input").attr("disabled", true);
+        $("#list-settings-mail").css('display','none');
+        $("#list-settings-no-mail :input").attr("disabled", false);
+        $("#list-settings-no-mail").css('display','block');
+      }
+    }
+    $('#review-mode').change( mailCheckboxHandler);
+    mailCheckboxHandler();
+  });
+
+= render 'shared/error_messages', object: f.object
+
+= f.label :name
+= f.text_field :name, autofocus: true, class: "form-control", placeholder: List.human_attribute_name(:name)
+
+-# Reverse
+.form-category-h= I18n.t('lists.form.reverse.title')
+.form-category-container
+  = f.label :reverse, class: "checkbox-inline" do
+    = f.check_box :reverse, class: "input-inline"
+    != I18n.t('lists.form.reverse.label')
+
+-# Mail
+.form-category-h Reviews
+.form-category-container
+  -# Checkbox version
+  = f.label :mode, class: "checkbox-inline" do
+    = f.check_box :review_mode, {class: "input-inline", id: "review-mode"}, "mail", "no_mail"
+    = I18n.t('lists.form.chronos.review_mail.mail')
+
+  -# Radio version
+  -#= f.label :review_mode_mail, class: "radio-inline" do
+  -#  = f.radio_button :review_mode, I18n.t('lists.form.chronos.review_mail.mail'), class: "input-inline"
+  -#  = I18n.t('lists.form.chronos.review_mail.mail')
+  -#= f.label :review_mode_no_mail, class: "radio-inline" do
+  -#  = f.radio_button :review_mode, I18n.t('lists.form.chronos.review_mail.no_mail'), class: "input-inline"
+  -#  = I18n.t('lists.form.chronos.review_mail.mail')
+
+  #list-settings-mail
+    .form-sub-category-container
+      - if !user.email_confirmed?
+        %small.rk
+          = t 'lists.form.chronos.email_required'
+          = link_to t('lists.form.chronos.email_confirmation_link'), require_email_confirmation_url
+          != t 'lists.form.chronos.email_not_confirmed', address: user.email 
+        %br
+      %strong= I18n.t('lists.form.chronos.review_mail.mail')
+      = f.number_field :chronos_capacity_volume, min: 0, step: 1, class: "digits-inline-3x-field form-control-inl"
+      = Card.model_name.human.pluralize.downcase
+      %strong= I18n.t('lists.form.chronos.capacity.every')
+      = f.select :review_mail_recurrency, List.review_mail_recurrencies_opts, {}, {class: "list-recurrency-selector form-control-inl input-inline"}
+  
+  #list-settings-no-mail
+    -# Rythm
+    -#.form-sub-category-h= I18n.t('lists.form.chronos.rythm.title')
+    .form-sub-category-container
+      = f.label :chronos_success_min_ts, I18n.t('lists.form.chronos.rythm.label')
+      %br
+      = f.fields_for :chronos_success_min_ts, list.chronos_success_min_ts do |ff|
+        = ff.number_field :days, min: 0, step: 1, class: "digits-inline-3x-field form-control-inl"
+        = I18n.t('unit.day_s')
+        = ff.number_field :hours, min: 0, step: 1, class: "digits-inline-3x-field form-control-inl"
+        = I18n.t('unit.hour_s')
+        = ff.number_field :minutes, min: 0, step: 1, class: "digits-inline-3x-field form-control-inl"
+        = I18n.t('unit.minute_s')
+  
+    -# Capacity
+    -#.form-sub-category-h= I18n.t('lists.form.chronos.capacity.title')
+    .form-sub-category-container
+      = f.label :chronos_capacity_volume, I18n.t('lists.form.chronos.capacity.volume.label')
+      = f.number_field :chronos_capacity_volume, min: 0, step: 1, class: "digits-inline-3x-field form-control-inl"
+      = Card.model_name.human.pluralize.downcase
+      %strong= I18n.t('lists.form.chronos.capacity.every')
+      = f.fields_for :chronos_capacity_ts, list.chronos_capacity_ts do |ff|
+        = ff.number_field :days, min: 0, step: 1, class: "digits-inline-3x-field form-control-inl"
+        = I18n.t('unit.day_s')
+      .form-field-comment!= I18n.t('lists.form.chronos.capacity.manual')

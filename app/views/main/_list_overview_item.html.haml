@@ -1,0 +1,31 @@
+- global_report = @lists_global_report[list_item.id]
+- charge_report = @lists_charge_report[list_item.id]
+- coming_report = @lists_coming_spans_report[list_item.id]
+
+%tr
+
+  %td
+    = link_to( new_card_path(list_name: list_item.name), class: "btn btn-success btn-xs", rel: I18n.t("monitor.list_overview.table.body.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus";}
+
+  %td
+    .list_name
+      = link_to list_item.name, cards_path(list_name: list_item.name)
+    - if global_report[:reverse]
+      %small.reverse!= I18n.t('monitor.list_overview.table.body.reverse')
+    %small!= pluralize(global_report[:total], Card.model_name.human.downcase)
+
+  = render "list_overview_item_chronos_report", 
+    charge_report: charge_report, 
+    coming_report: coming_report,
+    coming_max_span: @lists_coming_spans_report[ :max_coming_span],
+    list_card_count: global_report[:total],
+    list: list_item,
+    list_review_link: new_evaluation_path(list_name: list_item.name), 
+    list_review_link_tabindex: list_item_counter + 1
+
+  %td.list-overview-controls
+    -#= link_to( new_card_path(list_name: list_item.name), class: "btn btn-success btn-xs", rel: I18n.t("monitor.list_overview.table.body.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"}
+    -#= link_to( I18n.t("monitor.list_overview.table.body.list_view_link"), cards_path(list_name: list_item.name), class: "btn btn-primary btn-xs"){ haml_tag :i, :class => "glyphicon glyphicon-th-list"}
+    -#= link_to( cards_path(list_name: list_item.name), class: "btn btn-primary btn-xs", rel: I18n.t("monitor.list_overview.table.body.list_view_link")){ haml_tag :span, :class => "glyphicon glyphicon-th-list"}
+    = link_to( edit_list_path(list_item), class: "btn btn-warning btn-xs", rel: I18n.t("monitor.list_overview.table.body.list_edit_link")){ haml_tag :span, :class => "glyphicon glyphicon-cog"}
+    = link_to( list_path(list_item), method: :delete, data:{ confirm: I18n.t("monitor.list_overview.table.body.list_destroy_confirmation", list_name: list_item.name)}, class: "btn btn-danger btn-xs", rel: I18n.t("monitor.list_overview.table.body.list_destroy_link")){ haml_tag :span, :class => "glyphicon glyphicon-remove"}

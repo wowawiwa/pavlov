@@ -1,0 +1,14 @@
+- provide_title I18n.t("cards.#{action}.title")
+
+.row
+  .col-md-4.col-md-offset-4
+
+    -# normal creation
+    = form_for(@card) do |f|
+      = render 'card_form', f: f
+      = f.submit I18n.t("cards.#{action}.submit"), class: "btn form-first-btn form-save-btn"
+      = link_to I18n.t("cards.#{action}.back"), @back_url, class: "btn form-second-btn form-discard-btn"
+
+    -# mass import
+    - if action == 'new'
+      = link_to( I18n.t("cards.#{action}.new_batch_link"), new_batch_cards_path( list_name: @card.list.name), class: "btn form-first-btn alt-btn")

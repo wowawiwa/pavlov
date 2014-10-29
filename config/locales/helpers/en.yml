@@ -1,0 +1,4 @@
+en:
+  helpers:
+    sessions:
+      signin_redirection: "Please sign in"

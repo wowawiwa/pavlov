@@ -1,0 +1,14 @@
+!!!
+%html
+  = render 'layouts/head'
+  %body
+    = render 'layouts/header' 
+    = yield :out_of_container
+    .container{ "role" => "main" }
+      - flash.select{|k,v| %w{success warning error info}.include? k}.each do |key, value|
+        = content_tag(:div, value, class: "alert alert-#{key}") 
+      = yield
+      = render 'layouts/footer' 
+      = debug(@debug) if admin? and @debug
+      -#= method(:debug)
+      -# str = PP.pp( @debug, "") # to be wrapped in pre

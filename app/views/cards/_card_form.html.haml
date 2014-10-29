@@ -1,0 +1,13 @@
+= render 'shared/error_messages', object: f.object.evaluable
+= render 'shared/error_messages', object: f.object.list, prefix: List.model_name.human
+
+= hidden_field_tag :back_url, @back_url
+
+= fields_for :word, f.object.evaluable do |ff|
+  = ff.label :card, I18n.t('cards.new.card')
+  = ff.text_area :content, :rows => "3", placeholder: I18n.t('cards.new.content.placeholder'), autofocus: true, class: "card-front-side form-control"
+  = ff.text_area :tip, :rows => "3", placeholder: I18n.t('cards.new.tip.placeholder'), class: "form-control"
+
+= fields_for :list, f.object.list do |ff|
+  = ff.label :name, 'List'
+  = ff.text_field :name, class: "form-control", placeholder: List.human_attribute_name(:name)

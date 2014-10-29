@@ -1,0 +1,11 @@
+.row#eval-controls
+  .col-md-2.col-md-offset-5
+    = render 'review_showcase_form'
+  .col-md-2.text-right
+    .form-field-comment= I18n.t("evaluations.new.remaining", count: pluralize( @card.list.chronos_report_flow(Time.zone.now)[:ready], Card.model_name.human.downcase))
+
+.row#eval-word-container
+  .col-md-3
+    = render "shared/guide", label: :reveal
+  .col-md-6
+    = render 'review_showcase_card'

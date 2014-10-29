@@ -1,0 +1,41 @@
+- guides = current_user.guide
+- checked_guides = guides.select{|label, is_checked| is_checked}.keys
+
+- if ([:welcome, :letstour] - checked_guides).present? # only display row if some aren t checked
+  .row
+    = render "shared/guide", label: :welcome
+    = render "shared/guide", label: :letstour, previous: :welcome
+
+- provide_title I18n.t('monitor.title')
+
+- if ([:list, :review, :progression, :settings] - checked_guides).present? # only display row if some aren t checked
+  .row
+    .col-md-3
+      = render "shared/guide", label: :list, previous: :letstour
+    .col-md-3
+      = render "shared/guide", label: :review, previous: :add
+    .col-md-3
+      = render "shared/guide", label: :progression, display_cdt: (not guides[:progression] and current_user.evaluations.count > 0), previous: :review
+    .col-md-3
+      = render "shared/guide", label: :settings, previous: :progression
+
+- if current_user.lists.empty? # no card && no list
+  .row
+    .col-sm-4.col-sm-offset-4
+      %h2!= I18n.t('monitor.overview.no_cards')
+      %br
+      %p
+        = link_to( I18n.t("monitor.global_controls.new_cards_link"), new_card_path, class: "btn btn-success btn-sm btn-block")
+        = link_to( I18n.t("monitor.global_controls.new_list_link"), new_list_path, class: "btn btn-success btn-sm btn-block")
+- if current_user.lists.any?
+  =# link_to( new_list_path, class: "btn btn-success btn-sm", data: { keybinding: access_key(:new_list)}, rel: I18n.t("monitor.global_controls.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat I18n.t("models.list.list").capitalize}
+  =# link_to( new_card_path, class: "btn btn-success btn-sm", data: { keybinding: access_key(:new_card)}, rel: I18n.t("monitor.global_controls.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat I18n.t("models.card.card").capitalize}
+  %p
+    = render 'list_overview'
+  =# link_to( new_list_path, class: "btn btn-success btn-sm", rel: I18n.t("monitor.global_controls.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat I18n.t("models.list.list").capitalize}
+  =# link_to( new_card_path, class: "btn btn-success btn-sm", rel: I18n.t("monitor.global_controls.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat I18n.t("models.card.card").capitalize}
+
+- if ([:add] - checked_guides).present?
+  .row
+    .col-md-3
+      = render "shared/guide", label: :add, previous: :list

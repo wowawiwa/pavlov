@@ -1,0 +1,12 @@
+%tr
+  %td!= card_item.evaluable.content
+  %td!= card_item.evaluable.tip
+  - dt = card_item.meta.next_evaluation_date - now
+  %td!= dt < 0 ? I18n.t('cards.index.table.body.now') : distance_of_time_in_words( dt)
+  - if @list.reverse
+    - dt = card_item.evaluable.reverse.card.meta.next_evaluation_date - now
+    %td!= dt < 0 ? I18n.t('cards.index.table.body.now') : distance_of_time_in_words( dt)
+  %td
+    .btn-group.btn-group-xs
+      = link_to( I18n.t("cards.index.table.body.card_edit_link"), edit_card_path(card_item), class: "btn edit-btn")
+      = link_to( I18n.t("cards.index.table.body.card_delete_link"), card_path(card_item), method: :delete, data: { confirm: I18n.t("cards.index.table.body.card_delete_confirmation")}, class: "btn delete-btn")

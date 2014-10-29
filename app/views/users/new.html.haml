@@ -1,0 +1,107 @@
+!!!
+%html
+  = render 'layouts/head'
+  %body
+    = render 'layouts/header' 
+    .welcome-frame
+      .row.welcome-top-row
+        .container
+          - provide_title I18n.t('application.logo')
+          %h2.welcome-sub-subtitle Learning & Self-Conditioning with Spaced Repetition
+          -#Spaced repetition training
+          -# Lazy reliable learning with spaced repetition
+          -# Spaced repetition learning
+          .col-sm-4.col-sm-offset-2
+            .welcome-sign-form
+              = form_for(@user) do |f|
+                = render 'shared/user_form', f: f
+                .welcome-form-bottom
+                  .welcome-sign-up
+                    = text_field_tag(:invite_code, nil, autocomplete: "off", class: "form-control", placeholder: 'Invite code?') if invite_code_activated?
+                    = f.submit I18n.t("welcome.submit"), class: "btn form-first-btn sign-btn"
+                  .text-right
+                    %span.welcome-sign-in.welcome-big
+                      or
+                      %strong.text-center= link_to t('welcome.signin'), signin_url
+          .col-sm-5
+            .welcome-features
+              -# TODO make a helper to do that
+              %ul.list-unstyled.icon-list.welcome-big
+                %li.glyphicon-pencil 
+                  %strong Create flash-cards
+                  %br 
+                  about anything you want to 
+                  %strong train
+                -# glyphicon-pencil glyphicon-th-list glyphicon-list-alt
+                %li.glyphicon-calendar 
+                  -# glyphicon-stats
+                  Pavlov <strong>understands</strong> when a card 
+                  %br is worth to be reviewed again
+                -# monitors, manages, understand
+                -# glyphicon-random glyphicon-dashboard glyphicon-tasks glyphicon-time
+                -# %li.glyphicon-send Pavlov can <strong>alert</strong> you by mail
+
+                %li.glyphicon-cog
+                  %strong Review your cards
+                  %br focusing on the content only
+
+                %li.glyphicon-pushpin
+                  Set a <strong>daily or weekly</strong> amount of work 
+                  %br or configure <strong>review mails</strong>
+                  -# .glyphicon-send .glyphicon-envelope
+                %br
+                %br
+                %li.glyphicon-arrow-right.welcome-features-ccl-li
+                  %strong.welcome-features-ccl Carefree
+                  learning
+                  -#%br Pavlov pays attention for you.
+                  -# Careless learning.
+                  -# Self-sustaining
+                  -# Just a matter of time before you have it learned.
+                  -# sooner or later, you'll have it learned.
+                  -# glyphicon-chevron-right glyphicon-play glyphicon-hand-right
+                  -# Let the time serve you:
+      .row.welcome-middle-row
+        .container.welcome-sub-subtitle.welcome-big 
+          %h2.welcome-sub-subtitle Create and let Pavlov do the boring stuff
+          .col-sm-4
+            %ul.list-unstyled.icon-list
+              %li.glyphicon-pencil
+                Create a 
+                %strong flash-card 
+                for anything that you want to 
+                %strong train on.
+                %ul.welcome-ul
+                  %li <strong>Languages</strong>
+                  %li New <strong>habits</strong> to get into
+                  %li <strong>History</strong>
+                  %li ...
+          .col-sm-4
+            %ul.list-unstyled.icon-list
+              %li.glyphicon-cog
+                -# glyphicon-retweet
+                Pavlov let you
+                <strong>review your content</strong>
+                and
+                <strong>assess your assimilation</strong>:
+                = image_tag("com/reviewing_and_assessment.jpg", style: "width: 100%; margin-top: 20px; margin-bottom: 10px;")
+                -#%li.glyphicon-adjust
+                -#.glyphicon-sort
+                -#.glyphicon-edit
+                -#It takes this opportunity to let you
+          .col-sm-4
+            %ul.list-unstyled.icon-list
+              %li.glyphicon-calendar
+                Using your assessments, Pavlov knows 
+                %strong when a card is worth being reviewed again.
+              %li.glyphicon-envelope
+                You can 
+                %strong configure a daily or weekly mail 
+                for each list of cards independently 
+          = image_tag("com/mustaches-light-blue.jpg", style: "width: 100%; margin-top: 10px;")
+          = image_tag("com/screenshot.jpg", style: "width: 100%; margin-top: 10px;")
+      -#.container
+      -#  = render 'layouts/footer' 
+      .row#welcome-low-row
+        .container
+          = render 'layouts/footer'

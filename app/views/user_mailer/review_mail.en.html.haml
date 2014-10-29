@@ -1,0 +1,11 @@
+= "Hello #{@user_name},"
+%br
+%br!= "To review <i>#{@list_name}</i> it's #{link_to("this way!", @url)}"
+%ul
+- @cards.each do |c|
+  %li= c
+%br!= "Otherwise, you may want to #{link_to("change your parameters?", @edit_param_url)}"
+%br
+%br With care,
+%br
+%br Pavlov

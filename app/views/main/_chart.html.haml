@@ -1,0 +1,94 @@
+- color_coming = "rgba(141, 184, 221, .5)" # blue from Bootstrap primary with transparency 50%
+- color_now =    "rgba(255, 0,   0  , .05)"
+- font = "11px Helvetica"
+- label_color = "#999999" #bootstrap gray-light
+- x_axis_color = label_color
+- x_axis_tick_color = x_axis_color
+- ready_count ||= 0
+-# http://api.highcharts.com/highcharts#xAxis.gridLineDashStyle
+:javascript
+  $(function () {
+    $('##{container_id}').highcharts({
+      chart: {
+        type: 'scatter',
+        animation: false,
+        backgroundColor:'rgba(255, 255, 255, 0)'
+      },
+      tooltip: {
+        enabled: false
+      },
+      title: {
+        text: null
+      },
+      credits: {
+        enabled: false
+      },
+      xAxis: {
+        title: null,
+        // scale:
+        min: 0,
+        tickPositions: [0, #{max_span}],
+        endOnTick: true,
+        // design:
+        lineColor: 'transparent', // Axis line color
+        tickPosition: 'outside',
+        tickWidth: 2,
+        tickLength: 0,
+        gridLineWidth: 5,
+        tickColor: '#{x_axis_tick_color}',
+        // labels:
+        labels: {
+          formatter: function() {
+            if (this.value == 0)
+              return "#{I18n.t("program.coming.chart.now", now_count: ready_count)}";
+            else
+              return "#{I18n.t("program.coming.chart.until1")} #{pluralize( scale_value, I18n.t("unit.#{scale_label}"))} #{I18n.t("program.coming.chart.until2")}";
+          },
+          style: {
+            color: '#{label_color}',
+            font: '#{font}'
+          }
+        }
+      },
+      yAxis: {
+        title: null,
+        labels: {
+          enabled: false  // hide y values
+        },
+        gridLineWidth: 2,
+        gridLineDashStyle: 'Dot',
+        gridLineColor: '#{x_axis_color}'
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        scatter: {
+          marker: {
+            radius: 5
+          }
+        },
+        series: {
+          animation: false
+        }
+      },
+      series: [{
+        color: '#{color_coming}',
+        data:
+          #{
+            spans.map{|span| [span,0]}.to_json
+          },
+        marker: {
+          symbol: 'circle'
+        }
+      },
+      {
+        color: '#{color_now}',
+        data:
+          #{
+            Array.new(ready_count, [0,0]).to_json
+          }
+      }
+      ]
+    });
+  });

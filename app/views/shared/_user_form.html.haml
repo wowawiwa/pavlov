@@ -1,0 +1,13 @@
+= render 'shared/error_messages', object: f.object
+
+-#= f.label :name
+= f.text_field :name, autocomplete: "off", class: "form-control", placeholder: User.human_attribute_name(:name)
+
+-#= f.label :email
+= f.text_field :email, autocomplete: "off", class: "form-control", placeholder: User.human_attribute_name(:email)
+
+-#= f.label :password
+= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: User.human_attribute_name(:password)
+
+-#= f.label :password_confirmation
+-#= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: User.human_attribute_name(:password_confirmation)

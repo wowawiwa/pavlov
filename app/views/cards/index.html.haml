@@ -1,0 +1,19 @@
+- provide_title I18n.t('cards.index.title'), @list.name
+- if @list.indexables.any?
+  %table.table
+    %tr
+      %th= I18n.t('cards.index.table.header.content')
+      %th= I18n.t('cards.index.table.header.tip')
+      %th= I18n.t('cards.index.table.header.next_review')
+      - if @list.reverse
+        %th= I18n.t('cards.index.table.header.next_review_reverse')
+      %th.col-xs-1.cards-index-controls= I18n.t('cards.index.table.header.control')
+    = render partial: 'card_item', collection: @list.indexables.desc, :locals => {now: Time.zone.now}
+    %tr
+      %td{ colspan: 6}
+        = link_to( new_card_path(list_name: @list.name), class: "btn btn-success btn-xs", rel: I18n.t("monitor.list_overview.table.body.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat( Card.model_name.human)}
+- else
+  %p
+    != I18n.t('cards.index.no_cards')
+  %p
+    = link_to( I18n.t("monitor.global_controls.new_cards_link"), new_card_path(list_name: @list.name), class: "btn btn-success btn-sm")

@@ -1,0 +1,10 @@
+- if object.errors.any?
+  #error_explanation
+    .alert.alert-warning
+      %ul
+        -#= I18n.t('shared.error_messages.form_errors_header', 
+                  errors: pluralize(object.errors.count, I18n.t('shared.error_messages.error_word')))
+        - object.errors.full_messages.each do |msg|
+          - if defined? prefix
+            - msg = prefix + ' ' + msg.downcase
+          %li= msg

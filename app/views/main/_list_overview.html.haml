@@ -1,0 +1,14 @@
+-#%h3= I18n.t('monitor.list_overview.title') 
+-#= link_to( new_list_path, class: "btn btn-success btn-sm", data: { keybinding: access_key(:new_list)}, rel: I18n.t("monitor.global_controls.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat I18n.t("models.list.list").capitalize}
+%table.table
+  -#%tr
+  -#  %th= I18n.t('monitor.list_overview.table.header.list') 
+  -#  %th
+  -#  %th.charge.col-sm-2= I18n.t('program.charge.title')
+  -#  -#%th= I18n.t('program.charge.title2')
+  -#  %th= I18n.t('program.coming.title')
+  -#  %th.list-overview-controls= I18n.t('monitor.list_overview.table.header.actions')
+  = render partial: 'list_overview_item', collection: current_user.lists.display_order, as: :list_item
+  %tr
+    %td{ colspan: 6}
+      = link_to( new_list_path, class: "btn btn-success btn-xs", data: { keybinding: access_key(:new_list)}, rel: I18n.t("monitor.global_controls.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat List.model_name.human}

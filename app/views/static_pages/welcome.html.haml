@@ -1,0 +1,12 @@
+%br
+
+%h1= I18n.t('static_pages.welcome.title', app_name: I18n.t('application.name'))
+
+.row
+  .col-md-4.col-md-offset-4
+
+    %br
+    = render 'static_pages/synopsis'
+    %br
+
+    = link_to I18n.t('layout.signup'), signup_path, class: "btn form-first-btn sign-btn"

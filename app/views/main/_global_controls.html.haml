@@ -1,0 +1,3 @@
+= link_to( I18n.t("monitor.global_controls.new_cards_link"), new_card_path, accesskey: 'l' , class: "btn btn-success btn-sm")
+= link_to( new_card_path(list_name: list_item.name), class: "btn btn-success btn-xs", accesskey: 'l', rel: I18n.t("monitor.global_controls.new_cards_link")){ haml_tag :span, :class => "glyphicon glyphicon-plus"; haml_concat "List"}
+= link_to( I18n.t("monitor.global_controls.new_list_link"), new_list_path, class: "btn btn-success btn-sm")

@@ -1,0 +1,20 @@
+- provide_title I18n.t('cards.new_batch.title')
+.row
+  .col-md-4.col-md-offset-4
+
+    %p!= I18n.t('cards.new_batch.intro')
+
+    .after-form
+      %p!= I18n.t('cards.new_batch.manual_list', list_name: @list.name)
+      = form_tag import_cards_path, multipart: true do
+        = render 'shared/error_messages', object: @list
+
+        = file_field_tag :file, class: "file-field form-control"
+
+        = hidden_field_tag :list_name, @list.name
+        = submit_tag I18n.t('cards.new_batch.submit'), data: { confirm: I18n.t("cards.new_batch.import_confirmation", list_name: @list.name)}, class: "btn add-btn"
+
+    .after-form.form-field-comment
+      %p!= I18n.t('cards.new_batch.manual_format_intro')
+      %pre.form-field-comment= I18n.t('cards.new_batch.manual_format')
+      %p!= I18n.t('cards.new_batch.manual_format_descr')

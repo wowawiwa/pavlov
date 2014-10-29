@@ -1,0 +1,6 @@
+.eval-field-container
+  #content!= @word.content 
+- if @word.tip.present?
+  .eval-field-container#tip-container
+    #tip!= @word.tip
+  .form-field-comment= I18n.t("evaluations.new.manual", key: kb_binding[:tip_show][:display])

@@ -1,0 +1,71 @@
+%td
+  - if list_card_count != 0
+
+    - if list.review_mode == "mail"
+      -# mail
+
+      - if list.user.email_confirmed?
+
+        .rk
+          %span.glyphicon.glyphicon-envelope
+          -#= "#{I18n.t('program.review_mode')}," 
+          = "#{charge_report[:chronos_capacity_volume]} #{t('program.review_every')} #{list.review_mail_reccurency_str(:abr)}"
+        - if charge_report[:ready] != 0 
+          %small
+            - ready_text = capture_haml( "#{charge_report[:ready]}", I18n.t("program.review_anyw"), I18n.t("program.upto")){|count_text, review_text, upto_text| haml_tag(:b, review_text); haml_tag(:span, class: "badge"){ haml_concat(count_text) } }
+            = link_to ready_text, list_review_link, class: "btn btn-default btn-sm"
+        - else
+          .rk.no= I18n.t("program.charge.ready_none")
+      - else
+        .rk
+          -#%span.glyphicon.glyphicon-warning-sign 
+          -# TODO I18n
+          Waiting for 
+          != link_to t('program.email_addr_conf'), require_email_confirmation_url
+    - elsif list.review_mode == "no_mail"
+      -# no mail
+
+      - if charge_report[:ready] != 0
+        -# ready
+        - ready_text = capture_haml( "#{charge_report[:ready]}", I18n.t("program.review_link"), I18n.t("program.upto")){|count_text, review_text, upto_text| haml_tag(:b, review_text); haml_tag(:span, class: "badge"){ haml_concat(count_text) } }
+        = defined?(list_review_link) ? link_to( ready_text, list_review_link, class: "btn btn-primary btn-sm", tabindex: list_review_link_tabindex,  accesskey: access_key(:review)) : ready_text
+      - else
+        .rk.no= I18n.t("program.charge.ready_none")
+
+      - if charge_report[:capacity] 
+        -# charge
+        %br
+        .rk
+          = I18n.t('program.charge.upto')
+          %strong= charge_report[:chronos_capacity_volume]
+          %strong= "#{Card.model_name.human.downcase.pluralize(charge_report[:chronos_capacity_volume])}"
+          = I18n.t('program.charge.per')
+          %strong= "#{distance_of_time_in_words(charge_report[:chronos_capacity_tspan])}"
+          -# capacity settings
+          - if charge_report[:pending] != 0  
+            = " (#{charge_report[:pending]} #{I18n.t("program.charge.pending")})"
+          -# else
+            %small.no!= I18n.t("program.charge.pending_none")
+
+%td
+  -# coming
+  - if list_card_count != 0 and list.review_mode != "paused"
+    - if coming_report.present? #or charge_report[:ready] > 0
+      - coming_max_span = coming_report.max || 0 # coming_max_span for global max
+      - container_id = "container_#{SecureRandom.hex(10)}"
+      -#%small= "#{I18n.t("program.coming.coming", coming_count: coming_report.count)}"
+      .rk
+        = "#{I18n.t("program.coming.coming")}"
+        = "(#{coming_report.count}):"
+      .chart{id: "#{container_id}", class: "chart"}
+        - scale = scale_computer( coming_max_span.round)
+        -# coming_report = coming_report.map{|s| seconds_to(s, scale[:label])}
+        -# coming_max_span = seconds_to( coming_max_span, scale[:label])
+        = render 'chart',
+          container_id: "#{container_id}", 
+          spans: coming_report, 
+          max_span: scale[:value].send(scale[:label]), 
+          scale_value: scale[:value], 
+          scale_label: scale[:label]
+    - else
+      .rk.no= I18n.t("program.coming.none")

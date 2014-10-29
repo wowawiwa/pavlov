@@ -1,0 +1,12 @@
+- provide_title I18n.t('static_pages.kbshortcuts.title')
+- b = kb_binding
+- b.map{|a, f| f[:context]}.compact.uniq.each do |context|
+  .form-category-h!= I18n.t("static_pages.kbshortcuts.contexts.#{context}")
+  .form-category-container
+    %table.table
+      - b.select{|action, facets| facets[:context] == context}.each do |action, facets|
+        %tr
+          %td.col-sm-6= I18n.t("static_pages.kbshortcuts.#{action.to_s}")
+          %td
+            = facets[:display] || facets[:keybinding].upcase
+            != I18n.t("static_pages.kbshortcuts.#{action.to_s}_rk", default: "")

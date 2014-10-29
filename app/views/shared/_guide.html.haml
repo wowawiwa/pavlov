@@ -1,0 +1,18 @@
+- if not defined?(reverse)
+  - reverse = false
+- if not defined?(display_cdt)
+  - should_display = !current_user.guide[label]
+- else
+  - should_display = display_cdt
+- if not defined?(previous)
+  - previous_checked = true
+- else
+  - previous_checked = current_user.guide[previous]
+
+// display?
+- if should_display and previous_checked
+  -# content_for :out_of_container do
+  .guide
+    .text-right{ style: "float: right;"}
+      = link_to( ok_guide_path(guide: label), class: "guide-close"){ haml_tag :span}
+    = render "guides/#{label}"
